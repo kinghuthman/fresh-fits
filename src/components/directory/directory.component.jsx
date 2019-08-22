@@ -2,7 +2,7 @@ import React from 'react';
 import MenuItem from '../menu-item/menu-item.component';
 import './directory.styles.scss';
 
-// Sections of the home page
+// Sections of the home page rendered via menu items through the directory
 class Directory extends React.Component {
     constructor(){
         super();
