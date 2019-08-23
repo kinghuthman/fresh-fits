@@ -15,7 +15,7 @@ function App() {
       {/**switch finds a match within the path and does not render anything else but that path  */}
       <Switch>
         <Route exact path = '/' component={Homepage} />
-        <Route path = '/hats' component={HatsPage} />
+        <Route path = '/shop/hats' component={HatsPage} />
       </Switch>
     </div>
   );
