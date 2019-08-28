@@ -8,7 +8,7 @@ import './header.styles.scss';
 const Header = () => (
     <div className = 'header'>
         {/** logo links back to homepage */}
-        <Link classname = 'logo-container' to = '/'>
+        <Link className = 'logo-container' to = '/'>
             <Logo className = 'logo' />
         </Link>
         {/** special container for individual link options */}

@@ -25,6 +25,6 @@ const config = {
   provider.setCustomParameters({ prompt: 'select_account' });
 
   // only google auth will pop up and none of the others avaialble from firebase
-  export const signInWithGoogle = () => auth.signInWithPopup(provider)
+  export const signInWithGoogle = () => auth.signInWithPopup(provider);
 
   export default firebase;

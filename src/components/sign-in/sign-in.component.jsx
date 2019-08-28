@@ -22,15 +22,15 @@ class SignIn extends React.Component{
         // want full control of what submit is going to do
         event.preventDefault();
 
-        this.setState({ email: '', password: ''})
+        this.setState({ email: '', password: '' })
     }
 
     // pulls the value and name off of the targeted event
     handleChange = event => {
-        const {value, name } = event.target;
+        const { value, name } = event.target;
 
         // dynamically set state with the name and value that has been retrieved  ex: email: this.state.email
-        this.setState({ [name]: value})
+        this.setState({ [name]: value })
     } 
     render() {
         return(
@@ -42,8 +42,8 @@ class SignIn extends React.Component{
                     <FormInput 
                         name = 'email'
                         type = 'email'
-                        value = {this.state.email}
                         handleChange={this.handleChange}
+                        value = {this.state.email}
                         label = 'email'
                         required
                     />
@@ -51,13 +51,14 @@ class SignIn extends React.Component{
                     <FormInput 
                         name = 'password' 
                         type = 'password'
-                        value = {this.state.password}
                         handleChange={this.handleChange}
+                        value = {this.state.password}
                         label = 'password'
                         required
                     />
 
                     <CustomButton type='submit'> Sign in</CustomButton>
+                    {/** sign in with google pop up! */}
                     <CustomButton onClick={signInWithGoogle}> Sign in with Google</CustomButton>
                 </form>
             </div>
