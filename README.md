@@ -1,7 +1,9 @@
+
 FRESH FITS
 
-Tech Used
+TECH USED
+----------------------
 React
-
-License
-MIT 
+React-rotuer-dom
+Firebase
+Sass
