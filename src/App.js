@@ -21,10 +21,30 @@ class App extends React.Component {
 
   componentDidMount() {
     // from the auth library.. takes a function where the parameter is the state of the user, firebase keeps track of all the instances of the application that are open and communicating with it, therefore if a page is closed or refresh, a user will still be signed in until they sign out or are timed out thanks to the open subscription.  
-    this.unsubscribeFromAuth = auth.onAuthStateChanged(async user => {
-      createUserProfileDocument(user)
-      
-    })
+    this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
+      // user is signed in
+      if(userAuth){
+        // function returns userRef to use anywhere in app
+        const userRef = await createUserProfileDocument(userAuth);
+        // will return a snapshot object representing the data that is currently stored in the database
+        userRef.onSnapshot(snapShot => {
+          // set state with the current user value 
+          this.setState({
+            currentUser: {
+              id: snapShot.id,
+              ...snapShot.data()
+            } 
+          }, () => {
+            // setState is async need to pass a second function as a parameter so then then it is called after state is fully propagated
+            console.log(this.state);
+          })
+        });
+        
+      } else {
+        // user is signed out
+        this.setState({ currentUser: userAuth });
+      }
+    });
   }
 
   componentWillUnmount() {

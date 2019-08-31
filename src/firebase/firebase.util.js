@@ -38,6 +38,7 @@ const config = {
         console.log('error creating user', error.message);
       }
     }
+    // allows us to use anywhere in our app, ex: setState with user data
     return userRef;
   } 
 
