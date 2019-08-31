@@ -5,7 +5,7 @@ import Homepage from './pages/homepage/homepage.component';
 import ShopPage from './pages/shop/shop.component';
 import Header from './components/header/header.component';
 import SignInAndSignUpPage from './pages/sign-in-and-sign-up/sign-in-and-sign-up.component';
-import { auth } from './firebase/firebase.util'
+import { auth, createUserProfileDocument } from './firebase/firebase.util'
 
 class App extends React.Component {
   constructor() {
@@ -21,9 +21,9 @@ class App extends React.Component {
 
   componentDidMount() {
     // from the auth library.. takes a function where the parameter is the state of the user, firebase keeps track of all the instances of the application that are open and communicating with it, therefore if a page is closed or refresh, a user will still be signed in until they sign out or are timed out thanks to the open subscription.  
-    this.unsubscribeFromAuth = auth.onAuthStateChanged(user => {
-      this.setState({ currentUser: user });
-      console.log(user)
+    this.unsubscribeFromAuth = auth.onAuthStateChanged(async user => {
+      createUserProfileDocument(user)
+      
     })
   }
 
