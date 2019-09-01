@@ -5,7 +5,7 @@ import './sign-in.styles.scss';
 import FormInput from '../form-input/form-input.component';
 import CustomButton from '../custom-button/custom-button.component';
 
-import { signInWithGoogle } from '../../firebase/firebase.util';
+import { auth, signInWithGoogle } from '../../firebase/firebase.util';
 
 // sign in component, will render on sign-in-and-sign-up page
 class SignIn extends React.Component{
@@ -18,11 +18,21 @@ class SignIn extends React.Component{
         }
     }
 
-    handleSubmit = event => {
+    handleSubmit = async event => {
         // want full control of what submit is going to do
         event.preventDefault();
 
-        this.setState({ email: '', password: '' })
+        const { email, password } = this.state;
+        
+        try {
+            await auth.signInWithEmailAndPassword(email, password);
+            // upon successful login clear input fields
+            this.setState({ email: '', password: '' })
+        } catch(error) {
+            console.log(error);
+        }
+
+        
     }
 
     // pulls the value and name off of the targeted event
