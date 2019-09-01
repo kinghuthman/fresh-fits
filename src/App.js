@@ -34,10 +34,8 @@ class App extends React.Component {
               id: snapShot.id,
               ...snapShot.data()
             } 
-          }, () => {
-            // setState is async need to pass a second function as a parameter so then then it is called after state is fully propagated
-            console.log(this.state);
-          })
+          });
+          console.log(this.state);
         });
         
       } else {
