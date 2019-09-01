@@ -18,6 +18,41 @@ class SignUp extends React.Component {
             confirmPassword: ''
         }
     }
+    // async function gets event and prevent the default action of a form submit
+    handleSubmit = async event => {
+        event.preventDefault();
+
+        const { displayName, email, password, confirmPassword } = this.state;
+        // check if passwords match
+        if(password !== confirmPassword){
+            alert("password don't match");
+            return;
+        }
+
+        try {
+            // creates a new user associated with the email and password
+            const { user } = await auth.createUserWithEmailAndPassword(email, password)
+            // once the user is returned, run createUserProfileDocument, if successful reset state, 
+            await createUserProfileDocument(user, { displayName });
+            // so await user creation then run setState and set state to the initial values where everything is empty.. clear form!
+            this.setState({
+                displayName: '',
+                email: '',
+                password: '',
+                confirmPassword: ''
+            })
+
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    handleChange = event => {
+        const { name, value } = event.target;
+
+        this.setState({ [name]: value });
+    }
+
     render(){
         const { displayName, email, password, confirmPassword } = this.state;
         return(
