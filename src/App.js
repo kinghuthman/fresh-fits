@@ -53,7 +53,7 @@ class App extends React.Component {
     return (
       <div>
         {/**header is always present on all pages*/}
-        <Header currentUser={this.state.currentUser} />
+        <Header />
         {/**switch finds a match within the path and does not render anything else but that path  */}
         <Switch>
           <Route exact path = '/' component={Homepage} />
