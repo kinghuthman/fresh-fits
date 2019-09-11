@@ -1,26 +1,27 @@
 import React from 'react';
-import './App.css';
 import { Switch, Route } from 'react-router-dom';
+import { connect } from 'react-redux';
+
+import './App.css';
+
 import Homepage from './pages/homepage/homepage.component';
 import ShopPage from './pages/shop/shop.component';
 import Header from './components/header/header.component';
 import SignInAndSignUpPage from './pages/sign-in-and-sign-up/sign-in-and-sign-up.component';
-import { auth, createUserProfileDocument } from './firebase/firebase.util'
+import { auth, createUserProfileDocument } from './firebase/firebase.util';
+import { setCurrentUser } from './redux/user/user.actions';
 
 class App extends React.Component {
-  constructor() {
-    super();
-
-    this.state = {
-      currentUser: null
-    }
-  }
 
   // need to close the subscription to prevent memory leaks when the component is unmounted
   unsubscribeFromAuth = null;
 
   componentDidMount() {
-    // from the auth library.. takes a function where the parameter is the state of the user, firebase keeps track of all the instances of the application that are open and communicating with it, therefore if a page is closed or refresh, a user will still be signed in until they sign out or are timed out thanks to the open subscription.  
+    /* from the auth library.. takes a function where the parameter is the state 
+    of the user, firebase keeps track of all the instances of the application 
+    that are open and communicating with it, therefore if a page is closed or 
+    refresh, a user will still be signed in until they sign out or are timed 
+    out thanks to the open subscription. */
     this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
       // user is signed in
       if(userAuth){
@@ -54,7 +55,8 @@ class App extends React.Component {
       <div>
         {/**header is always present on all pages*/}
         <Header />
-        {/**switch finds a match within the path and does not render anything else but that path  */}
+        {/**switch finds a match within the path and does not render anything else 
+        but that path  */}
         <Switch>
           <Route exact path = '/' component={Homepage} />
           <Route path = '/shop' component={ShopPage} />
@@ -65,5 +67,22 @@ class App extends React.Component {
   }
 }
 
-export default App;
+/** 
+  * action will go to a function that gets the user object  
+  * whatever action passed into dispatch will be an action object passed to every
+reducer 
+  * user action is a function that returns a user object
+  */
+const mapDispatchToProps = dispatch => ({
+  setCurrentuser: user => dispatch(setCurrentUser(user))
+})
+
+/** 
+  * connect the app to the outcome of the initial connect call using the second 
+argument of connect which is mapDispatchToProps
+  * null as the first argument for connect as we don't need state to props from 
+  the reducer
+  * second argument is the mapDispatchToProps function
+*/ 
+export default connect(null, mapDispatchToProps)(App);
  
