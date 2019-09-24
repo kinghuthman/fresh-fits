@@ -1,3 +1,5 @@
+import { UserActionTypes } from './user.types';
+
 // redux is unaware of what state is initially when an action is fired.
 const INITIAL_STATE = {
     currentUser: null
@@ -7,7 +9,7 @@ const INITIAL_STATE = {
 const userReducer = (state = INITIAL_STATE, action) => {
     // based on the action.type value
     switch (action.type) {
-        case 'SET_CURRENT_USER':
+        case UserActionTypes.SET_CURRENT_USER:
             // return a new object that represents the new state that the user reducer will transform too
             return {
                 // spread in everything else from state only want to modify what is required

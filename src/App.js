@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import './App.css';
@@ -61,12 +61,29 @@ class App extends React.Component {
         <Switch>
           <Route exact path = '/' component={Homepage} />
           <Route path = '/shop' component={ShopPage} />
-          <Route path = '/signin' component={SignInAndSignUpPage} />
+          {/** if user is signed in redirect to home page else 
+          signinSignUpPage */}
+          <Route 
+            exact 
+            path = '/signin' 
+            render={() => 
+              this.props.currentUser ? (
+              <Redirect to='/' />
+              ) : (
+                <SignInAndSignUpPage />
+              )
+            } 
+          />
         </Switch>
       </div>
     );
   }
 }
+
+// grab the current user from the redux state
+const mapStateToProps = ({ user }) => ({
+    currentUser: user.currentUser
+})
 
 /** 
   * action will go to a function that gets the user object  
@@ -84,6 +101,7 @@ argument of connect which is mapDispatchToProps
   * null as the first argument for connect as we don't need state to props from 
   the reducer
   * second argument is the mapDispatchToProps function
+  * mapStateToProps give us access to this.props.currentUser
 */ 
-export default connect(null, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);
  
