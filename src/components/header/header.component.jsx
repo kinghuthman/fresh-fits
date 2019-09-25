@@ -10,7 +10,7 @@ import { ReactComponent as Logo } from '../../assets/crown.svg';
 import './header.styles.scss';
 
 // header is aware of the status of the currentUser
-const Header = ({ currentUser }) => (
+const Header = ({ currentUser, hidden }) => (
     <div className = 'header'>
         {/** logo links back to homepage */}
         <Link className = 'logo-container' to = '/'>
@@ -36,7 +36,9 @@ const Header = ({ currentUser }) => (
             )}
             <CartIcon />
         </div>
+        { hidden ? null :
         <CartDropdown />
+        }
     </div>
 )
 
@@ -44,10 +46,10 @@ const Header = ({ currentUser }) => (
 will return an object where the value or site where the name of the 
 property will be the actual property we want to pass in 
 and then the value will be the value */
-const mapStateToProps = state => ({
-    // state is the rootReducer, user is the userReducer, currentUser is a property of state from the userReducer
-    currentUser: state.user.currentUser
-})
-
+const mapStateToProps = ({user: { currentUser }, cart: { hidden }}) => ({
+    // destructured currentuser and hidden, off of user and cart which both come from state
+    currentUser,
+    hidden
+});
 // connect is a hoc that will provide additonal functionality to header
 export default connect(mapStateToProps)(Header);
